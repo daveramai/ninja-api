@@ -17,7 +17,7 @@ let NinjaSchema = new Schema({
   //add geo location here
 });
 
-//create Ninja model now using our schema above - a model of ninjas!
+//create Ninja model now using our schema above - a model of ninjas will be created!
 let Ninja = mongoose.model("ninja", NinjaSchema);
 
 //export the Ninja model

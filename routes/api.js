@@ -2,8 +2,9 @@
  Use this file to setup our routes for the Ninja API
  */
 
-//require express package
+//require packages here
 let express = require("express");
+let Ninja = require("../models/ninja");
 
 //need express router
 let router = express.Router();
@@ -16,11 +17,12 @@ router.get("/ninjas", function (req, res) {
 
 //add a new ninja to the database
 router.post("/ninjas", function (req, res) {
-  console.log(req.body);
-  res.send({
-    type: "Post",
-    name: req.body.name,
-    rank: req.body.rank,
+  //create new ninja object using the data sent from the request
+  // let ninja = new Ninja(req.body);
+  // ninja.save();
+  //simplier way than above two lines
+  Ninja.create(req.body).then(function (ninja) {
+    res.send(ninja);
   });
 });
 
