@@ -7,3 +7,7 @@ let app = express();
 app.listen(process.env.port || 4000, function () {
   console.log("Now listening for requests");
 });
+
+app.get("/api", function (req, res) {
+  res.send({ name: "Dave" });
+});
