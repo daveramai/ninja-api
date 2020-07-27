@@ -21,12 +21,19 @@ try {
 //override the mongoose Promise with node's Promise - as its deprecated
 mongoose.Promise = global.Promise;
 
-//middleware added - order is important!
+// 1st middleware
+//bodyparser package to parse http request body - order is important!
 app.use(bodyParser.json());
 
-//initialize routes
-//to use the routes in the api.js file and automatically append '/api/...'
+// 2nd middleware
+//iniatilize and use the routes in the api.js file and automatically append '/api/...'
 app.use("/api", require("./routes/api"));
+
+// 3rd middleware
+//error handliing with a custom function that we create
+app.use(function (err, req, res, next) {
+  res.status(422).send({ "Custom error": err.message });
+});
 
 //listen for requests
 app.listen(process.env.port || 4000, function () {

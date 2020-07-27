@@ -11,29 +11,32 @@ let router = express.Router();
 
 //get a list of ninjas form the database
 //nb: don't need to add /api in front
-router.get("/ninjas", function (req, res) {
+router.get("/ninjas", function (req, res, next) {
   res.send({ type: "Get" });
 });
 
 //add a new ninja to the database
-router.post("/ninjas", function (req, res) {
+router.post("/ninjas", function (req, res, next) {
   //create new ninja object using the data sent from the request
   // let ninja = new Ninja(req.body);
   // ninja.save();
   //simplier way than above two lines
-  Ninja.create(req.body).then(function (ninja) {
-    res.send(ninja);
-  });
+  Ninja.create(req.body)
+    .then(function (ninja) {
+      res.send(ninja);
+    })
+    //move on to the next middleware for error handling
+    .catch(next);
 });
 
 //update a ninja in the db
 //nb- ":id" is a variable
-router.put("/ninjas/:id", function (req, res) {
+router.put("/ninjas/:id", function (req, res, next) {
   res.send({ type: "Put" });
 });
 
 //delete a ninja from the db
-router.delete("/ninjas/:id", function (req, res) {
+router.delete("/ninjas/:id", function (req, res, next) {
   res.send({ type: "Delete" });
 });
 
