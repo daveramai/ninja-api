@@ -11,7 +11,11 @@ let uri =
 try {
   mongoose.connect(
     uri,
-    { useNewUrlParser: true, useUnifiedTopology: true },
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      useFindAndModify: false,
+    },
     () => console.log("Connected to my mongodb")
   );
 } catch (error) {
