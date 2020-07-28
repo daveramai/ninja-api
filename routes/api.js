@@ -12,7 +12,22 @@ let router = express.Router();
 //get a list of ninjas form the database
 //nb: don't need to add /api in front
 router.get("/ninjas", function (req, res, next) {
-  res.send({ type: "Get" });
+  /*Ninja.find({}).then(function (ninjas) {
+    res.send(ninjas);
+  });*/
+  Ninja.aggregate()
+    .near({
+      near: {
+        type: "Point",
+        coordinates: [parseFloat(req.query.lng), parseFloat(req.query.lat)],
+      },
+      maxDistance: 100000,
+      spherical: true,
+      distanceField: "dist.calculated",
+    })
+    .then(function (ninjas) {
+      res.send(ninjas);
+    });
 });
 
 //add a new ninja to the database
