@@ -25,6 +25,9 @@ try {
 //override the mongoose Promise with node's Promise - as its deprecated
 mongoose.Promise = global.Promise;
 
+//middleware to serve static files
+app.use(express.static("public"));
+
 // 1st middleware
 //bodyparser package to parse http request body - order is important!
 app.use(bodyParser.json());
